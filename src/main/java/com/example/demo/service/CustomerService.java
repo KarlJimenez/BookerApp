@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.example.demo.model.Customer;
+import com.example.demo.model.Reservation;
 import com.example.demo.repository.CustomerRepository;
 
 public class CustomerService {
@@ -63,5 +64,19 @@ public class CustomerService {
 		for(Customer customer : customerRepository.findAllById(customerIds)) {
 			deleteCustomer(customer.getCustomerId());
 		}
+	}
+	
+	//*************** Special Methods ******************
+
+	@Transactional
+	public void attachReservation(Reservation reservation, Customer customer) {
+		customer.addReservation(reservation);
+		customerRepository.save(customer);
+	}
+	
+	@Transactional
+	public void detachReservation(Reservation reservation, Customer customer) {
+		customer.removeReservation(reservation);
+		customerRepository.save(customer);
 	}
 }

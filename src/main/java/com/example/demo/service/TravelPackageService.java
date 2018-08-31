@@ -44,8 +44,8 @@ public class TravelPackageService {
 	public void deleteTravelPackage(int travelPackageId) {
 		if(travelPackageRepository.existsById(travelPackageId)) {
 			TravelPackage travelPackage = travelPackageRepository.findById(travelPackageId).get();
-			serviceService.deleteServices(travelPackage.getAvailableServiceList());
-			imageService.deleteImages(travelPackage.getImages());
+			serviceService.deleteServicesFromParent(travelPackage.getAvailableServiceList());
+			imageService.deleteImagesFromParent(travelPackage.getImages());
 			travelPackageRepository.deleteById(travelPackageId);
 		}
 	}

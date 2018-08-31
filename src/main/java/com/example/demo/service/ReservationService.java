@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.example.demo.model.Customer;
 import com.example.demo.model.Reservation;
+import com.example.demo.model.ServiceOb;
 import com.example.demo.repository.ReservationRepository;
 
 public class ReservationService {
@@ -29,17 +31,27 @@ public class ReservationService {
 	
 	@Transactional
 	public Reservation updateReservation(int reservationId, Reservation reservation) {
-		if(reservationRepository.existsById(reservationId)) {
-			reservation.setReservationId(reservationId);
-			reservationRepository.save(reservation);
+		Reservation newReservation;
+		if(reservationRepository.existsById(reservation.getReservationId())) {
+			reservation = assignRelationships(reservation);
+			if(reservation != null) {
+				reservationRepository.save(reservation);
+			}
+			newReservation = reservation;
 		}
-		return reservation;
+		else {
+			newReservation = null;
+		}
+		return newReservation;
 	}
 	
 	@Transactional
 	public void deleteReservation(int reservationId) {
 		if(reservationRepository.existsById(reservationId)) {
-			reservationRepository.deleteById(reservationId);
+			/*Reservation reservation = getReservation(reservationId);
+			customerService.detachReservation(reservation, reservation.getCustomer());
+			serviceService.detachReservation(reservation, reservation.getAvailedServiceList());
+			*/reservationRepository.deleteById(reservationId);
 		}
 	}
 	
@@ -52,10 +64,52 @@ public class ReservationService {
 	
 	@Transactional
 	public List<Reservation> addReservations(List<Reservation> reservations){
-		reservationRepository.saveAll(reservations);
 		for(Reservation reservation : reservations) {
-			
+			reservation = assignRelationships(reservation);
+			if(reservation == null) {
+				reservations.remove(reservation);
+			}
+		}
+		return (List<Reservation>) reservationRepository.saveAll(reservations);
+	}
+	
+	@Transactional
+	public List<Reservation> updateReservations(List<Reservation> reservations){
+		for(Reservation reservation : reservations) {
+			reservation = updateReservation(reservation.getReservationId(), reservation);
+			if(reservation == null) {
+				reservations.remove(reservation);
+			}
 		}
 		return reservations;
+	}
+	
+	@Transactional
+	public void deleteReservations(List<Integer> reservationIds) {
+		for(Integer reservationId : reservationIds) {
+			deleteReservation(reservationId);
+		}
+	}
+	
+	//*************** Special Methods ******************
+	
+	//****** Assigning customer and services for a reservation (returns null when customer doesn't exist) ******
+	@Transactional
+	public Reservation assignRelationships(Reservation reservation) {
+		Customer customer = customerService.getCustomer(reservation.getCustomer().getCustomerId());
+		if(customer != null) {
+			customerService.attachReservation(reservation, customer);
+		}
+		//****** if there is no such customer, disregard reservation ******
+		else {
+			return null;
+		}
+		for(ServiceOb service : reservation.getAvailedServiceList()) {
+			//****** if there is no such service, disregard service ******
+			if(!serviceService.attachReservation(reservation, service)) {
+				reservation.removeService(service);
+			}
+		}
+		return reservation;
 	}
 }

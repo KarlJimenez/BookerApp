@@ -20,33 +20,34 @@ import com.example.demo.service.TravelPackageService;
 public class ServiceConfig {
 
 	@Bean
-	public CustomerService getCustomerService(CustomerRepository customerRepository) {
+	public CustomerService customerService(CustomerRepository customerRepository) {
 		return new CustomerService(customerRepository);
 	}
 	
 	@Bean
-	public FeedbackService getFeedbackService(FeedbackRepository feedbackRepository) {
+	public FeedbackService feedbackService(FeedbackRepository feedbackRepository) {
 		return new FeedbackService(feedbackRepository);
 	}
 	
 	@Bean
-	public ImageService getImageService(ImageRepository imageRepository) {
+	public ImageService imageService(ImageRepository imageRepository) {
 		return new ImageService(imageRepository);
 	}
 	
 	@Bean
-	public ReservationService getReservationService(ReservationRepository reservationRepository, 
+	public ReservationService reservationService(ReservationRepository reservationRepository, 
 			CustomerService customerService, ServiceService serviceService) {
 		return new ReservationService(reservationRepository, customerService, serviceService);
 	}
 	
 	@Bean
-	public ServiceService getServiceService(ServiceRepository serviceRepository, ImageService imageService) {
-		return new ServiceService(serviceRepository, imageService);
+	public ServiceService serviceService(ServiceRepository serviceRepository, 
+			ImageService imageService, ReservationRepository reservationRepository) {
+		return new ServiceService(serviceRepository, imageService, reservationRepository);
 	}
 	
 	@Bean
-	public TravelPackageService getTravelPackageService(TravelPackageRepository travelPackageRepository,
+	public TravelPackageService travelPackageService(TravelPackageRepository travelPackageRepository,
 			ServiceService serviceService, ImageService imageService) {
 		return new TravelPackageService(travelPackageRepository, serviceService, imageService);
 	}

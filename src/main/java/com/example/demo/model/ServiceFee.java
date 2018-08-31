@@ -7,12 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class ServiceFee {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_fee_generator")
+//	@SequenceGenerator(name="service_fee_generator", sequenceName = "service_fee_seq")
 	private int serviceFeeId;
 	private float amount;
 	@OneToOne

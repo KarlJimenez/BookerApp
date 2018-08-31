@@ -58,7 +58,16 @@ public class ImageService {
 	}
 	
 	@Transactional
-	public void deleteImages(List<Image> images) {
+	public void deleteImages(List<Integer> imageIds) {
+		for(Integer imageId : imageIds) {
+			deleteImage(imageId);
+		}
+	}
+	
+	//*************** Special Methods ******************
+	
+	@Transactional
+	public void deleteImagesFromParent(List<Image> images) {
 		for(Image image : images) {
 			deleteImage(image.getImageId());
 		}

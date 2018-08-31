@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
@@ -14,7 +15,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 public class Image {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_generator")
+	//@SequenceGenerator(name="image_generator", sequenceName = "image_seq")
 	private int imageId;
 	private String description;
 	private String imageUrl;

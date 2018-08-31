@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,7 +15,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Customer {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
+	//@SequenceGenerator(name="customer_generator", sequenceName = "customer_seq")
 	private int customerId;
 	private String firstName;
 	private String lastName;
@@ -40,7 +43,11 @@ public class Customer {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public void addReservations(Reservation reservation) {
+	public void addReservation(Reservation reservation) {
 		reservations.add(reservation);
+	}
+	
+	public void removeReservation(Reservation reservation) {
+		reservations.remove(reservation);
 	}
 }

@@ -9,12 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Reservation {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedback_generator")
+//	@SequenceGenerator(name="feedback_generator", sequenceName = "feedback_seq")
 	private int reservationId;
 	@OneToMany
 	private List<ServiceOb> availedServiceList;
@@ -45,5 +48,11 @@ public class Reservation {
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	public void addService(ServiceOb service) {
+		availedServiceList.add(service);
+	}
+	public void removeService(ServiceOb service) {
+		availedServiceList.remove(service);
 	}
 }
