@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 public class TravelPackage {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int travelPackageId;
 	private String packageName;
 	@OneToMany(mappedBy="travelPackage")

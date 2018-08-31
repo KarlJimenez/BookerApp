@@ -53,15 +53,15 @@ public class CustomerService {
 	@Transactional
 	public List<Customer> updateCustomers(List<Customer> customers){
 		for(Customer customer : customers) {
-			if(customerRepository.existsById(customer.getCustomerId())) {
-				customerRepository.save(customer);
-			}
+			updateCustomer(customer.getCustomerId(), customer);
 		}
 		return customers;
 	}
 
 	@Transactional
 	public void deleteCustomers(List<Integer> customerIds) {
-		customerRepository.deleteAll(customerRepository.findAllById(customerIds));
+		for(Customer customer : customerRepository.findAllById(customerIds)) {
+			deleteCustomer(customer.getCustomerId());
+		}
 	}
 }

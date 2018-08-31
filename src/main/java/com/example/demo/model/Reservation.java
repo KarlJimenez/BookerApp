@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 public class Reservation {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int reservationId;
 	@OneToMany
 	private List<ServiceOb> availedServiceList;

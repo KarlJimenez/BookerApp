@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public class Feedback {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int feedbackId;
 	private String feedback;
 	private double rate;

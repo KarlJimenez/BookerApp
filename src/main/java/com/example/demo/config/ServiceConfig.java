@@ -36,18 +36,18 @@ public class ServiceConfig {
 	
 	@Bean
 	public ReservationService getReservationService(ReservationRepository reservationRepository, 
-			ServiceRepository serviceRepository, CustomerRepository customerRepository) {
-		return new ReservationService(reservationRepository, serviceRepository, customerRepository);
+			CustomerService customerService, ServiceService serviceService) {
+		return new ReservationService(reservationRepository, customerService, serviceService);
 	}
 	
 	@Bean
-	public ServiceService getServiceService(ServiceRepository serviceRepository) {
-		return new ServiceService(serviceRepository);
+	public ServiceService getServiceService(ServiceRepository serviceRepository, ImageService imageService) {
+		return new ServiceService(serviceRepository, imageService);
 	}
 	
 	@Bean
 	public TravelPackageService getTravelPackageService(TravelPackageRepository travelPackageRepository,
-			ServiceRepository serviceRepository, ImageRepository imageRepository) {
-		return new TravelPackageService(travelPackageRepository, serviceRepository, imageRepository);
+			ServiceService serviceService, ImageService imageService) {
+		return new TravelPackageService(travelPackageRepository, serviceService, imageService);
 	}
 }

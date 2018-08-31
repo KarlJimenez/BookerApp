@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 public class ServiceFee {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int serviceFeeId;
 	private float amount;
 	@OneToOne

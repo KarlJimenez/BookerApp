@@ -6,10 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
@@ -17,7 +19,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 public class ServiceOb {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int serviceId;
 	private String serviceName;
 	private String description;
@@ -25,6 +27,9 @@ public class ServiceOb {
 	private List<Image> images;
 	@ManyToOne
 	private TravelPackage travelPackage;
+	@ManyToMany
+	@JsonIgnore
+	private List<Reservation> reservations;
 	
 	public int getServiceId() {
 		return serviceId;
