@@ -7,20 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Reservation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedback_generator")
-//	@SequenceGenerator(name="feedback_generator", sequenceName = "feedback_seq")
 	private int reservationId;
-	@OneToMany
+	@ManyToMany
 	private List<ServiceOb> availedServiceList;
+	
 	private LocalDate departureDate;
 	@ManyToOne
 	private Customer customer;
@@ -33,9 +31,6 @@ public class Reservation {
 	}
 	public List<ServiceOb> getAvailedServiceList() {
 		return availedServiceList;
-	}
-	public void setAvailedServiceList(List<ServiceOb> availedServiceList) {
-		this.availedServiceList = availedServiceList;
 	}
 	public LocalDate getDepartureDate() {
 		return departureDate;

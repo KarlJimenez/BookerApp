@@ -7,19 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
-@JsonIdentityInfo(generator=PropertyGenerator.class, property="travelPackageId")
 public class TravelPackage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "travel_package_generator")
-//	@SequenceGenerator(name="travel_package_generator", sequenceName = "travel_package_seq")
 	private int travelPackageId;
 	private String packageName;
 	@OneToMany(mappedBy="travelPackage")

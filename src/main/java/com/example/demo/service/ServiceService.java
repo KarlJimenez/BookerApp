@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -89,6 +90,9 @@ public class ServiceService {
 	@Transactional
 	public boolean attachReservation(Reservation reservation, ServiceOb service) {
 		if(serviceRepository.existsById(service.getServiceId())){
+			if(service.getReservations() == null) {
+				service.setReservations(new ArrayList<Reservation>());
+			}
 			service.addReservation(reservation);
 			serviceRepository.save(service);
 			return true;

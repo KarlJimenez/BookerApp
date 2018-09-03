@@ -64,13 +64,15 @@ public class ReservationService {
 	
 	@Transactional
 	public List<Reservation> addReservations(List<Reservation> reservations){
+		reservationRepository.saveAll(reservations);
 		for(Reservation reservation : reservations) {
-			reservation = assignRelationships(reservation);
-			if(reservation == null) {
+			Reservation newReservation = assignRelationships(reservation);
+			if(newReservation == null) {
 				reservations.remove(reservation);
+				reservationRepository.delete(reservation);
 			}
 		}
-		return (List<Reservation>) reservationRepository.saveAll(reservations);
+		return reservations;
 	}
 	
 	@Transactional
@@ -106,6 +108,7 @@ public class ReservationService {
 		}
 		for(ServiceOb service : reservation.getAvailedServiceList()) {
 			//****** if there is no such service, disregard service ******
+			System.out.println(reservation);
 			if(!serviceService.attachReservation(reservation, service)) {
 				reservation.removeService(service);
 			}

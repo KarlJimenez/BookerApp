@@ -9,26 +9,21 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
-@JsonIdentityInfo(generator=PropertyGenerator.class, property="serviceId")
 public class ServiceOb {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_ob_generator")
-//	@SequenceGenerator(name="service_ob_generator", sequenceName = "service_ob_seq")
 	private int serviceId;
 	private String serviceName;
 	private String description;
 	@OneToMany(mappedBy="service")
 	private List<Image> images;
 	@ManyToOne
+	@JsonIgnore
 	private TravelPackage travelPackage;
 	@ManyToMany
 	@JsonIgnore
@@ -67,7 +62,11 @@ public class ServiceOb {
 	public List<Reservation> getReservations() {
 		return reservations;
 	}
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
 	public void addReservation(Reservation reservation) {
+		System.out.println(reservation.equals(null));
 		reservations.add(reservation);
 	}
 	public void removeReservation(Reservation reservation) {

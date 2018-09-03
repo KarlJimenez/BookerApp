@@ -5,15 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Feedback {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedback_generator")
-	//@SequenceGenerator(name="feedback_generator", sequenceName = "feedback_seq")
 	private int feedbackId;
 	private String feedback;
 	private double rate;
